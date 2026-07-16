@@ -4,5 +4,5 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: '/nome-do-seu-repositorio/', // 👈 adicione o nome exato do seu repositório aqui!
+  base: '/adocaoMiki/',
 });
