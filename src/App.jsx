@@ -18,32 +18,38 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('historia');
   const [activePhoto, setActivePhoto] = useState(0);
 
-  // Link real da sua vaquinha e links para você configurar
+  // Seus links de integração e vaquinha
   const linkVaquinha = "https://www.vakinha.com.br/vaquinha/ajude-a-cachorrinha-miki";
-  const linkGoogleSheets = "https://docs.google.com/spreadsheets/d/SEU_ID_DA_PLANILHA/edit?usp=sharing"; // Substitua com o seu link
-  const linkPastaComprovantes = "https://drive.google.com/drive/folders/SEU_ID_DO_DRIVE?usp=sharing"; // Substitua com a pasta onde guarda os recibos
+  const linkGoogleSheets = "https://docs.google.com/spreadsheets/d/SEU_ID_DA_PLANILHA/edit?usp=sharing";
+  const linkPastaComprovantes = "https://drive.google.com/drive/folders/SEU_ID_DO_DRIVE?usp=sharing";
 
   // Dados atualizados da Miki
   const totalGasto = 685;
   const totalArrecadado = 577;
-  const saldoLiquidoEstimado = 535; // Pós-taxas
+  const saldoLiquidoEstimado = 535;
   const diferencaProtetor = totalGasto - saldoLiquidoEstimado;
 
+  // Fotos reais da Miki estruturadas com links de renderização direta do Drive
   const midias = [
     {
-      url: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&q=80&w=800",
-      legenda: "Miki relaxando após um banho quentinho de clorexidina ☀️",
+      url: "https://lh3.googleusercontent.com/u/0/d/1BfCHM7nK9CshgS0yE-Y7H_OIn0mFzLgU",
+      legenda: "Miki toda elegante de pé na parede mostrando que é uma verdadeira lady! 🐾",
       categoria: "atual"
     },
     {
-      url: "https://images.unsplash.com/photo-1537151625747-768eb6cf92b2?auto=format&fit=crop&q=80&w=800",
-      legenda: "Super corajosa na consulta fazendo seu hemograma e check-up 🩺",
-      categoria: "vet"
+      url: "https://lh3.googleusercontent.com/u/0/d/1ODP7oAoGfPoup3iUBD12doC8Zt-mPg1k",
+      legenda: "Miki toda serelepe e limpinha pós-banho brincando no jardim de casa ☀️",
+      categoria: "atual"
     },
     {
-      url: "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?auto=format&fit=crop&q=80&w=800",
-      legenda: "Primeiro dia que a vimos no Jardim Guanabara 🥺",
-      categoria: "resgate"
+      url: "https://lh3.googleusercontent.com/u/0/d/12S8O6DnJPhJhkEw8JR0-MYb6cHLG8J6N",
+      legenda: "Olhar carinhoso esperando um cafuné na área de casa 🥺",
+      categoria: "atual"
+    },
+    {
+      url: "https://lh3.googleusercontent.com/u/0/d/1kf6qCEHv_35CuhH56uqzZGcpnGix6HVa",
+      legenda: "O rostinho mais doce de Fortaleza bem pertinho da câmera 🥰",
+      categoria: "atual"
     }
   ];
 
@@ -78,14 +84,18 @@ export default function App() {
         {/* COLUNA DA ESQUERDA (Desktop: Galeria Fixa ou Destaque Permanente) */}
         <div className="md:col-span-5 space-y-6 md:sticky md:top-6">
           <div className="bg-white border border-brand-200/60 rounded-[2rem] p-4 shadow-xs">
+            {/* Aqui aplicamos o pulo do gato:
+              - 'object-top' garante que o topo da imagem seja priorizado (cortando o chão molhado/sujo na base)
+              - 'brightness-105 contrast-101' clareia sutilmente as fotos sem estourar as cores
+            */}
             <div className="aspect-[4/3] rounded-[1.5rem] overflow-hidden bg-brand-50 relative">
               <img
                 src={midias[activePhoto].url}
                 alt="Galeria Miki"
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-top brightness-105 contrast-[1.01] transition-all duration-300"
               />
               <span className="absolute top-3 right-3 bg-white/95 backdrop-blur-md text-brand-900 text-[10px] uppercase font-black tracking-wider px-3 py-1 rounded-full border border-brand-200">
-                {midias[activePhoto].categoria === 'vet' ? '🩺 No Vet' : midias[activePhoto].categoria === 'resgate' ? '🥺 Resgate' : '✨ Linda'}
+                ✨ {midias[activePhoto].categoria === 'vet' ? 'Consulta' : 'Dia a Dia'}
               </span>
             </div>
 
@@ -94,17 +104,17 @@ export default function App() {
             </p>
 
             {/* Miniaturas */}
-            <div className="grid grid-cols-3 gap-2.5 mt-3">
+            <div className="grid grid-cols-4 gap-2 mt-3">
               {midias.map((item, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActivePhoto(idx)}
                   className={`aspect-square rounded-xl overflow-hidden border-2 transition-all ${activePhoto === idx
                       ? 'border-brand-500 scale-95 ring-4 ring-brand-500/10'
-                      : 'border-transparent opacity-60 hover:opacity-100'
+                      : 'border-transparent opacity-65 hover:opacity-100'
                     }`}
                 >
-                  <img src={item.url} className="w-full h-full object-cover" alt="thumbnail" />
+                  <img src={item.url} className="w-full h-full object-cover object-top" alt="thumbnail" />
                 </button>
               ))}
             </div>
@@ -185,14 +195,14 @@ export default function App() {
                 </div>
 
                 <p className="text-sm sm:text-base leading-relaxed text-stone-600">
-                  A Miki foi encontrada vagando e pedindo ajuda pelas calçadas do Jardim Guanabara. Rapidamente conquistou nossos corações por ser extremamente dócil, carinhosa e silenciosa (quase nunca late). Ela adora uma rotina tranquila, se comporta super bem em carros e aceita medicamentos direto na boca sem dificuldades.
+                  A Miki foi encontrada vagando e pedindo ajuda pelas calçadas do Jardim Guanabara. Rapidamente conquistou nossos corações por ser extremamente dócil, carinhosa e muito silenciosa (ela quase nunca late!). Ela adora uma rotina de carinho, se comporta super bem em passeios de carro e aceita comprimidos e sachês de tratamento sem dar nenhuma dor de cabeça.
                 </p>
 
-                {/* Ficha Técnica Atualizada */}
+                {/* Ficha Técnica Corrigida (2 anos e 12kg) */}
                 <div className="grid grid-cols-2 gap-2.5">
                   <div className="p-3 bg-brand-50 border border-brand-100 rounded-xl">
                     <span className="text-[10px] text-brand-600 uppercase font-bold tracking-wider block mb-0.5">Idade</span>
-                    <strong className="text-sm text-brand-900">~2 Anos</strong>
+                    <strong className="text-sm text-brand-900">~2 Anos (Jovem)</strong>
                   </div>
                   <div className="p-3 bg-brand-50 border border-brand-100 rounded-xl">
                     <span className="text-[10px] text-brand-600 uppercase font-bold tracking-wider block mb-0.5">Porte</span>
@@ -200,16 +210,16 @@ export default function App() {
                   </div>
                   <div className="p-3 bg-brand-50 border border-brand-100 rounded-xl">
                     <span className="text-[10px] text-brand-600 uppercase font-bold tracking-wider block mb-0.5">Raça</span>
-                    <strong className="text-sm text-brand-900">SRD (Vira-lata)</strong>
+                    <strong className="text-sm text-brand-900">SRD (Vira-lata linda)</strong>
                   </div>
                   <div className="p-3 bg-brand-50 border border-brand-100 rounded-xl">
                     <span className="text-[10px] text-brand-600 uppercase font-bold tracking-wider block mb-0.5">Temperamento</span>
-                    <strong className="text-sm text-brand-900">Amigável e Calma</strong>
+                    <strong className="text-sm text-brand-900">Super Dócil & Calma</strong>
                   </div>
                 </div>
               </div>
 
-              {/* Checklist de Saúde Reabilitação Concluída */}
+              {/* Checklist de Saúde Clínico Reabilitada */}
               <div className="bg-white border border-brand-200/60 rounded-[2rem] p-6 shadow-xs space-y-5">
                 <h2 className="text-lg font-bold text-brand-900 flex items-center gap-2.5">
                   <span className="p-1.5 bg-accent-50 text-accent-500 rounded-xl">
@@ -219,21 +229,21 @@ export default function App() {
                 </h2>
 
                 <div className="space-y-2.5 text-xs sm:text-sm">
-                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl">
+                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl border border-accent-500/10">
                     <CheckCircle2 className="w-5 h-5 text-accent-500 shrink-0" />
-                    <span><strong className="text-brand-900">Hemograma Completo:</strong> Realizado! Ela está saudável e com excelentes taxas fisiológicas.</span>
+                    <span><strong className="text-brand-900">Hemograma Completo:</strong> Realizado! Os resultados mostram que ela está super saudável, forte e com excelentes índices.</span>
                   </div>
-                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl">
+                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl border border-accent-500/10">
                     <CheckCircle2 className="w-5 h-5 text-accent-500 shrink-0" />
-                    <span><strong className="text-brand-900">Testes rápidos:</strong> Negativos para Calazar (Leishmaniose) e Erliquiose.</span>
+                    <span><strong className="text-brand-900">Testes rápidos:</strong> Negativos para Calazar (Leishmaniose) e Erliquiose (Doença do Carrapato).</span>
                   </div>
-                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl">
+                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl border border-accent-500/10">
                     <CheckCircle2 className="w-5 h-5 text-accent-500 shrink-0" />
-                    <span><strong className="text-brand-900">Vermífugo OK:</strong> Protocolo TopDog completo contra vermes.</span>
+                    <span><strong className="text-brand-900">Vermífugo OK:</strong> Protocolo TopDog completo contra endoparasitas realizado com sucesso.</span>
                   </div>
-                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl">
+                  <div className="flex gap-3 items-center p-3 bg-accent-50/30 rounded-xl border border-accent-500/10">
                     <CheckCircle2 className="w-5 h-5 text-accent-500 shrink-0" />
-                    <span><strong className="text-brand-900">Antiparasitário OK:</strong> Protegida com dose única de Wellpet.</span>
+                    <span><strong className="text-brand-900">Antiparasitário OK:</strong> Protegida de forma prolongada com dose única de Wellpet.</span>
                   </div>
                 </div>
               </div>
@@ -255,7 +265,7 @@ export default function App() {
                     </p>
                   </div>
 
-                  {/* Botão de Atalho para Planilha Externa */}
+                  {/* Link da Planilha no Sheets */}
                   <a
                     href={linkGoogleSheets}
                     target="_blank"
